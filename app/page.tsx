@@ -1,7 +1,8 @@
+// app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Page() {
+export default function HomePage() {
   return (
     <main className="w-full">
 
@@ -21,7 +22,7 @@ export default function Page() {
       </header>
 
       {/* HERO */}
-      <section className="relative w-full h-[65vh]">
+      <section className="relative w-full h-[55vh]">
         <Image
           src="/images/bjsm-hero.jpg"
           alt="BJSM Community Gathering"
@@ -30,67 +31,61 @@ export default function Page() {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 flex items-center justify-center text-center px-4">
-          <div className="text-white">
-            <h2 className="text-3xl md:text-5xl font-bold mb-3">
-              Bihar Diwas & 15th Anniversary of BJSM
-            </h2>
-            <p className="opacity-90">
-              Celebrating culture, community, and 15 years together
-            </p>
-          </div>
-        </div>
       </section>
 
       {/* EVENTS */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold mb-12 text-center">
+      <section className="max-w-7xl mx-auto px-6 py-16">
+
+        <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
           Upcoming Events
         </h2>
 
-        <div className="bg-white rounded-xl shadow-md p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        {/* EVENT CARD */}
+        <div className="max-w-[380px]">
 
-            {/* POSTER */}
-            <div className="flex justify-center md:justify-start">
-              <Image
-                src="/images/bihar-diwas-poster.jpg"
-                alt="Bihar Diwas Event Poster"
-                width={420}
-                height={650}
-                className="object-contain"
-              />
-            </div>
+          {/* POSTER */}
+          <Image
+            src="/images/bihar-diwas-poster.jpg"
+            alt="Bihar Diwas Event Poster"
+            width={380}
+            height={680}
+            className="rounded-lg mb-4"
+          />
 
-            {/* TEXT + RSVP (STAYS TOGETHER) */}
-            <div className="flex flex-col">
+          {/* TEXT BLOCK WITH VISIBLE BACKGROUND */}
+          <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
 
-              <h3 className="text-2xl font-semibold mb-4">
-                Bihar Diwas & 15th Anniversary
-              </h3>
+            <h3 className="text-xl font-semibold mb-2">
+              Bihar Diwas & 15th Anniversary
+            </h3>
 
-              <p className="text-gray-600 mb-6">
-                Join us in celebrating Bihar Diwas and 15 years of Bihar Jharkhand Sabha
-                with cultural programs, community gathering, and festivities.
-              </p>
+            <p className="text-gray-800 text-sm mb-3">
+              Join us in celebrating Bihar Diwas and 15 years of Bihar Jharkhand Sabha
+              with cultural programs, community gathering, and festivities.
+            </p>
 
-              <ul className="text-sm mb-8 space-y-2">
-                <li>📅 <strong>Sunday, 22 March 2026</strong></li>
-                <li>📍 New Lynn Community Centre – Main Hall</li>
-                <li>⏰ Program starts at 1:00 PM</li>
-              </ul>
+            <ul className="text-sm space-y-1">
+              <li>📅 Sunday, 22 March 2026</li>
+              <li>📍 New Lynn Community Centre – Main Hall</li>
+              <li>⏰ Program starts at 1:00 PM</li>
+            </ul>
 
-              <Link
-                href="/rsvp"
-                className="inline-block w-fit bg-red-700 hover:bg-red-800 text-white px-8 py-3 rounded-lg font-medium transition"
-              >
-                View Event / RSVP
-              </Link>
-
-            </div>
           </div>
+
+          {/* RSVP BUTTON */}
+          <Link
+            href="/rsvp"
+            className="inline-block bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-md font-medium"
+          >
+            View Event / RSVP
+          </Link>
+
         </div>
+
+        {/* NEXT EVENT (HOLI) WILL START BELOW THIS BLOCK */}
+
       </section>
+
     </main>
   );
 }
