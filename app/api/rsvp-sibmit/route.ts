@@ -14,6 +14,12 @@ export async function POST(req: Request) {
       );
     }
 
+    // 🔍 DIAGNOSTIC LOG — DO NOT MOVE
+    console.log("RSVP ENV CHECK", {
+      sheet: !!process.env.GOOGLE_SHEET_ID,
+      sa: !!process.env.GOOGLE_SERVICE_ACCOUNT_JSON,
+    });
+
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const serviceAccount = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
 
@@ -26,7 +32,6 @@ export async function POST(req: Request) {
 
     const credentials = JSON.parse(serviceAccount);
 
-    // ✅ CORRECT JWT CONSTRUCTOR (this was the blocker)
     const auth = new google.auth.JWT({
       email: credentials.client_email,
       key: credentials.private_key,
