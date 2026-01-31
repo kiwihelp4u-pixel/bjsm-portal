@@ -16,7 +16,6 @@ export async function POST(req: Request) {
 
     const sheetId = process.env.GOOGLE_SHEET_ID;
     if (!sheetId) {
-      console.error("Missing GOOGLE_SHEET_ID");
       return NextResponse.json(
         { error: "Server misconfiguration" },
         { status: 500 }
@@ -25,39 +24,29 @@ export async function POST(req: Request) {
 
     let auth;
 
-    // ---------- AUTH ----------
+    // Production (Vercel)
     if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
-      // Production (Vercel)
       const credentials = JSON.parse(
         process.env.GOOGLE_SERVICE_ACCOUNT_JSON
       );
 
-      const privateKey = credentials.private_key.replace(/\\n/g, "\n");
-
       auth = new google.auth.GoogleAuth({
         credentials: {
           client_email: credentials.client_email,
-          private_key: privateKey,
+          private_key: credentials.private_key.replace(/\\n/g, "\n"),
         },
         scopes: ["https://www.googleapis.com/auth/spreadsheets"],
       });
     } else {
       // Local development
       auth = new google.auth.GoogleAuth({
-        keyFile: path.join(
-          process.cwd(),
-          "app/google-service-account.json"
-        ),
+        keyFile: path.join(process.cwd(), "app/google-service-account.json"),
         scopes: ["https://www.googleapis.com/auth/spreadsheets"],
       });
     }
 
-    const sheets = google.sheets({
-      version: "v4",
-      auth,
-    });
+    const sheets = google.sheets({ version: "v4", auth });
 
-    // ---------- WRITE ----------
     await sheets.spreadsheets.values.append({
       spreadsheetId: sheetId,
       range: "A:G",
@@ -71,17 +60,16 @@ export async function POST(req: Request) {
             mobile,
             Number(adults || 0),
             Number(kids || 0),
-            consent ? "Yes" : "No",
+            "Yes",
           ],
         ],
       },
     });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("RSVP submit error:", error);
+  } catch (err) {
     return NextResponse.json(
-      { error: "Failed to submit RSVP" },
+      { error: "RSVP submission failed" },
       { status: 500 }
     );
   }
