@@ -20,7 +20,7 @@ export default function RSVPPage() {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!form.consent) {
@@ -28,9 +28,29 @@ export default function RSVPPage() {
       return;
     }
 
-    console.log("RSVP Submitted:", form);
+    console.log("📤 Sending RSVP to API", form);
 
-    alert("Thank you! Your RSVP has been submitted.");
+    const res = await fetch("/api/rsvp-submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        mobile: form.mobile,
+        adults: Number(form.adults),
+        kids: Number(form.kids),
+        consent: form.consent,
+      }),
+    });
+
+    if (!res.ok) {
+      alert("❌ Failed to submit RSVP");
+      return;
+    }
+
+    alert("✅ Thank you! Your RSVP has been submitted.");
 
     setForm({
       name: "",
@@ -56,7 +76,6 @@ export default function RSVPPage() {
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-xl p-8 space-y-6"
       >
-        {/* Name */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Full Name *
@@ -71,7 +90,6 @@ export default function RSVPPage() {
           />
         </div>
 
-        {/* Email */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Email Address *
@@ -86,7 +104,6 @@ export default function RSVPPage() {
           />
         </div>
 
-        {/* Mobile */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Mobile Number *
@@ -101,7 +118,6 @@ export default function RSVPPage() {
           />
         </div>
 
-        {/* Adults */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Number of Adults
@@ -116,7 +132,6 @@ export default function RSVPPage() {
           />
         </div>
 
-        {/* Kids */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Number of Kids
@@ -131,7 +146,6 @@ export default function RSVPPage() {
           />
         </div>
 
-        {/* Consent */}
         <div className="flex items-start gap-3">
           <input
             type="checkbox"
@@ -141,12 +155,10 @@ export default function RSVPPage() {
             className="mt-1"
           />
           <p className="text-sm text-gray-600">
-            I consent to BJSM collecting my details for event coordination
-            purposes only.
+            I consent to BJSM collecting my details for event coordination purposes only.
           </p>
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-semibold transition"
