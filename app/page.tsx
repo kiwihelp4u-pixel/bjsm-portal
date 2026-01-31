@@ -13,6 +13,7 @@ export default function HomePage() {
             alt="BJSM Logo"
             width={56}
             height={56}
+            priority
           />
           <h1 className="text-lg md:text-xl font-semibold">
             Bihar Jharkhand Sabha of Australia and New Zealand
@@ -46,23 +47,25 @@ export default function HomePage() {
 
       {/* ================= EVENTS SECTION ================= */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-
         <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">
           Upcoming Events
         </h2>
 
-        {/* EVENTS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
           {/* ===== EVENT CARD: BIHAR DIWAS ===== */}
           <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
-            <Image
-              src="/images/bihar-diwas-poster.jpg"
-              alt="Bihar Diwas Event"
-              width={600}
-              height={800}
-              className="object-cover"
-            />
+
+            {/* Poster – no crop */}
+            <div className="relative w-full h-[420px] bg-gray-100">
+              <Image
+                src="/images/bihar-diwas-poster.jpg"
+                alt="Bihar Diwas Event"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
 
             <div className="p-6 flex flex-col flex-grow">
               <h3 className="text-xl font-semibold mb-2">
@@ -90,14 +93,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Future events will be COPY-PASTE of this card */}
+          {/* Future events */}
           {/* Holi */}
           {/* Chhath */}
           {/* Diwali */}
 
         </div>
       </section>
-
     </main>
   );
 }
