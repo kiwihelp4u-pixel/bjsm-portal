@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: sheetId,
-      range: "A:G",
+      range: "Sheet1!A:G",
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [[
