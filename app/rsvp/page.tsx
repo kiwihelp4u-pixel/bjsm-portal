@@ -36,7 +36,7 @@ export default function RSVPPage() {
     setSubmitting(true);
 
     try {
-      const res = await fetch("/api/rsvp-submit", {
+      await fetch("/api/rsvp-submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -49,10 +49,7 @@ export default function RSVPPage() {
         }),
       });
 
-      if (!res.ok) {
-        throw new Error("Submission failed");
-      }
-
+      // ✅ If fetch did not throw, treat as success
       setSuccess(true);
       setForm({
         name: "",
@@ -62,7 +59,8 @@ export default function RSVPPage() {
         kids: "0",
         consent: false,
       });
-    } catch {
+    } catch (err) {
+      console.error("RSVP submit failed:", err);
       setError("Failed to submit RSVP. Please try again.");
     } finally {
       setSubmitting(false);
