@@ -13,21 +13,33 @@ export async function POST(req: Request) {
       );
     }
 
-    const sheetId = process.env.GOOGLE_SHEET_ID;
-    const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+    // 🔒 Sanitize env vars (Vercel-safe)
+    const sheetId = process.env.GOOGLE_SHEET_ID?.replace(/\s+/g, "");
+    const serviceAccountJson =
+      process.env.GOOGLE_SERVICE_ACCOUNT_JSON?.trim();
 
     if (!sheetId || !serviceAccountJson) {
       console.error("Missing env vars", {
-        sheetId: !!sheetId,
-        serviceAccountJson: !!serviceAccountJson,
+        sheetIdPresent: !!sheetId,
+        serviceAccountJsonPresent: !!serviceAccountJson,
       });
+
       return NextResponse.json(
         { error: "Server misconfiguration" },
         { status: 500 }
       );
     }
 
-    const credentials = JSON.parse(serviceAccountJson);
+    let credentials;
+    try {
+      credentials = JSON.parse(serviceAccountJson);
+    } catch (e) {
+      console.error("Failed to parse service account JSON", e);
+      return NextResponse.json(
+        { error: "Invalid service account configuration" },
+        { status: 500 }
+      );
+    }
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
@@ -44,21 +56,28 @@ export async function POST(req: Request) {
       range: "Sheet1!A:G",
       valueInputOption: "USER_ENTERED",
       requestBody: {
-        values: [[
-          new Date().toISOString(),
-          name,
-          email,
-          mobile,
-          Number(adults || 0),
-          Number(kids || 0),
-          "Yes",
-        ]],
+        values: [
+          [
+            new Date().toISOString(),
+            name,
+            email,
+            mobile,
+            Number(adults || 0),
+            Number(kids || 0),
+            "Yes",
+          ],
+        ],
       },
     });
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error("RSVP submit error:", error?.message || error);
+    // 🔍 Log full Google error when available
+    console.error(
+      "RSVP submit error:",
+      error?.response?.data || error?.message || error
+    );
+
     return NextResponse.json(
       { error: "Failed to submit RSVP" },
       { status: 500 }
