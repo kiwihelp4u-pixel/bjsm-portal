@@ -1,65 +1,103 @@
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="w-full">
+
+      {/* ================= HEADER ================= */}
+      <header className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
+          <Image
+            src="/images/bjsm-logo.png"
+            alt="BJSM Logo"
+            width={56}
+            height={56}
+          />
+          <h1 className="text-lg md:text-xl font-semibold">
+            Bihar Jharkhand Sabha of Australia and New Zealand
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+      </header>
+
+      {/* ================= HERO ================= */}
+      <section className="relative w-full h-[65vh]">
+        <Image
+          src="/images/bjsm-hero.jpg"
+          alt="BJSM Community Gathering"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/40" />
+
+        <div className="absolute inset-0 flex items-center justify-center text-center px-4">
+          <div className="text-white">
+            <h2 className="text-3xl md:text-5xl font-bold mb-3">
+              Bihar Diwas & 15th Anniversary of BJSM
+            </h2>
+            <p className="opacity-90">
+              Celebrating culture, community, and 15 years together
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= EVENTS SECTION ================= */}
+      <section className="max-w-7xl mx-auto px-6 py-20">
+
+        <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">
+          Upcoming Events
+        </h2>
+
+        {/* EVENTS GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+          {/* ===== EVENT CARD: BIHAR DIWAS ===== */}
+          <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/images/bihar-diwas-poster.jpg"
+              alt="Bihar Diwas Event"
+              width={600}
+              height={800}
+              className="object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-xl font-semibold mb-2">
+                Bihar Diwas & 15th Anniversary
+              </h3>
+
+              <p className="text-sm text-gray-600 mb-4">
+                Join us in celebrating Bihar Diwas and 15 years of Bihar Jharkhand Sabha in Auckland.
+              </p>
+
+              <ul className="text-sm mb-6 space-y-1">
+                <li>📅 Sunday, 22 March 2026</li>
+                <li>📍 New Lynn Community Centre – Main Hall</li>
+                <li>⏰ Program starts at 1:00 PM</li>
+              </ul>
+
+              <div className="mt-auto">
+                <Link
+                  href="/rsvp"
+                  className="inline-block w-full text-center bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-medium transition"
+                >
+                  View Event / RSVP
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Future events will be COPY-PASTE of this card */}
+          {/* Holi */}
+          {/* Chhath */}
+          {/* Diwali */}
+
         </div>
-      </main>
-    </div>
+      </section>
+
+    </main>
   );
 }
