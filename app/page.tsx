@@ -1,7 +1,7 @@
 // app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Globe } from "lucide-react";
 
 type EventCardProps = {
   title: string;
@@ -104,7 +104,6 @@ export default function HomePage() {
       {/* EVENTS */}
       <section className="max-w-7xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
-          {/* Bihar Diwas */}
           <EventCard
             title="Bihar Diwas & 15th Anniversary"
             posterSrc="/images/bihar-diwas-poster.jpg"
@@ -118,7 +117,6 @@ export default function HomePage() {
             }}
           />
 
-          {/* Upcoming Event */}
           <EventCard
             title="BJSM Event (Details to be announced)"
             posterSrc="/images/bjsm-holi-tbd.png"
@@ -132,10 +130,20 @@ export default function HomePage() {
       <footer className="border-t bg-white">
         <div className="max-w-7xl mx-auto px-6 py-10 text-center">
           <p className="text-sm text-gray-600 mb-4">
-            Follow Bihar Jharkhand Sabha of Australia and New Zealand
+            Official BJSM links and social channels
           </p>
 
           <div className="flex justify-center gap-8">
+            <a
+              href="https://www.bjsm.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="BJSM Official Website"
+              className="text-gray-600 hover:text-gray-900 transition"
+            >
+              <Globe size={28} />
+            </a>
+
             <a
               href="https://www.facebook.com/biharjharkhand"
               target="_blank"
