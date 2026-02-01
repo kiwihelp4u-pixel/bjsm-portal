@@ -1,6 +1,7 @@
 // app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { Facebook, Instagram } from "lucide-react";
 
 type EventCardProps = {
   title: string;
@@ -27,22 +28,22 @@ function EventCard({
     <div className="w-full">
       <h3 className="text-center font-semibold mb-4">Upcoming Event</h3>
 
-      <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
+      <div className="rounded-2xl border bg-white shadow-md hover:shadow-xl transition overflow-hidden">
         <div className="p-4 flex justify-center">
           <Image
             src={posterSrc}
             alt={posterAlt}
             width={420}
             height={760}
-            className="rounded-lg object-cover"
+            className="rounded-xl object-cover"
           />
         </div>
 
-        <div className="border-t p-4">
-          <h4 className="font-semibold text-base mb-2">{title}</h4>
+        <div className="border-t p-5">
+          <h4 className="font-semibold text-base mb-3">{title}</h4>
 
           {details && (
-            <div className="text-sm text-gray-800 space-y-1 mb-3">
+            <div className="text-sm text-gray-700 space-y-1 mb-4">
               {details.date && <div>📅 {details.date}</div>}
               {details.venue && <div>📍 {details.venue}</div>}
               {details.time && <div>⏰ {details.time}</div>}
@@ -50,15 +51,15 @@ function EventCard({
           )}
 
           {showRsvp && href && (
-  <Link href={href} className="block">
-    <button
-      type="button"
-      className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-semibold transition"
-    >
-      View Event / RSVP
-    </button>
-  </Link>
-)}
+            <Link href={href} className="block">
+              <button
+                type="button"
+                className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-semibold transition"
+              >
+                View Event / RSVP
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
@@ -69,9 +70,14 @@ export default function HomePage() {
   return (
     <main className="w-full">
       {/* HEADER */}
-      <header className="bg-white border-b">
+      <header className="bg-white border-b sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
-          <Image src="/images/bjsm-logo.png" alt="BJSM Logo" width={56} height={56} />
+          <Image
+            src="/images/bjsm-logo.png"
+            alt="BJSM Logo"
+            width={56}
+            height={56}
+          />
           <h1 className="text-lg md:text-xl font-semibold">
             Bihar Jharkhand Sabha of Australia and New Zealand
           </h1>
@@ -79,7 +85,7 @@ export default function HomePage() {
       </header>
 
       {/* HERO */}
-      <section className="relative w-full h-[50vh]">
+      <section className="relative w-full h-[55vh]">
         <Image
           src="/images/bjsm-hero.jpg"
           alt="BJSM Community Gathering"
@@ -87,11 +93,16 @@ export default function HomePage() {
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h2 className="text-white text-3xl md:text-5xl font-bold text-center px-4">
+            Celebrating Culture. Building Community.
+          </h2>
+        </div>
       </section>
 
       {/* EVENTS */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
+      <section className="max-w-7xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           {/* Bihar Diwas */}
           <EventCard
@@ -107,17 +118,50 @@ export default function HomePage() {
             }}
           />
 
-          {/* Holi / TBD – NO RSVP */}
+          {/* Upcoming Event */}
           <EventCard
             title="BJSM Event (Details to be announced)"
             posterSrc="/images/bjsm-holi-tbd.png"
             posterAlt="BJSM Upcoming Event Poster"
             showRsvp={false}
           />
-
-          
         </div>
       </section>
+
+      {/* FOOTER */}
+      <footer className="border-t bg-white">
+        <div className="max-w-7xl mx-auto px-6 py-10 text-center">
+          <p className="text-sm text-gray-600 mb-4">
+            Follow Bihar Jharkhand Sabha of Australia and New Zealand
+          </p>
+
+          <div className="flex justify-center gap-8">
+            <a
+              href="https://www.facebook.com/biharjharkhand"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="BJSM Facebook"
+              className="text-gray-600 hover:text-blue-600 transition"
+            >
+              <Facebook size={28} />
+            </a>
+
+            <a
+              href="https://www.instagram.com/bjsmanz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="BJSM Instagram"
+              className="text-gray-600 hover:text-pink-600 transition"
+            >
+              <Instagram size={28} />
+            </a>
+          </div>
+
+          <p className="text-xs text-gray-500 mt-6">
+            © {new Date().getFullYear()} BJSM. Community-led, not-for-profit.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
