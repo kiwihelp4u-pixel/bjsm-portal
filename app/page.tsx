@@ -1,7 +1,9 @@
-// app/page.tsx
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Globe } from "lucide-react";
+import { useEffect } from "react";
 
 type EventCardProps = {
   title: string;
@@ -67,8 +69,68 @@ function EventCard({
 }
 
 export default function HomePage() {
+  useEffect(() => {
+    const colors = [
+      "rgba(220,38,38,0.9)",
+      "rgba(236,72,153,0.9)",
+      "rgba(244,63,94,0.9)",
+    ];
+
+    const createHeart = () => {
+      const heart = document.createElement("div");
+      heart.innerText = "❤";
+
+      const size = Math.random() * 18 + 20;
+      const left = Math.random() * window.innerWidth;
+      const drift = Math.random() * 60 - 30;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      heart.style.position = "fixed";
+      heart.style.left = `${left}px`;
+      heart.style.bottom = "0px";
+      heart.style.fontSize = `${size}px`;
+      heart.style.color = color;
+      heart.style.pointerEvents = "none";
+      heart.style.zIndex = "9999";
+      heart.style.animation = "floatUp 4.5s ease-out forwards";
+      heart.style.transform = `translateX(${drift}px)`;
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 4500);
+    };
+
+    const onScroll = () => {
+      createHeart();
+      createHeart();
+      if (Math.random() > 0.5) createHeart();
+      if (Math.random() > 0.75) createHeart();
+    };
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   return (
     <main className="w-full">
+      <style jsx global>{`
+        @keyframes floatUp {
+          0% {
+            transform: translateY(0) scale(0.9);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-160px) scale(1.25);
+            opacity: 0;
+          }
+        }
+      `}</style>
+
       {/* HEADER */}
       <header className="bg-white border-b sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
