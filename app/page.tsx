@@ -71,42 +71,53 @@ function EventCard({
 export default function HomePage() {
   useEffect(() => {
     const colors = [
-      "rgba(220,38,38,0.9)",
-      "rgba(236,72,153,0.9)",
-      "rgba(244,63,94,0.9)",
+      "rgba(220,38,38,0.85)",   // red
+      "rgba(236,72,153,0.85)",  // pink
+      "rgba(255,255,255,0.9)",  // white
     ];
 
-    const createHeart = () => {
+    const createHeart = (side: "left" | "right") => {
       const heart = document.createElement("div");
       heart.innerText = "❤";
 
-      const size = Math.random() * 18 + 20;
-      const left = Math.random() * window.innerWidth;
-      const drift = Math.random() * 60 - 30;
+      const size = Math.random() * 8 + 16;
+      const verticalOffset = Math.random() * 120;
+      const drift =
+        side === "left"
+          ? Math.random() * 40
+          : Math.random() * -40;
+
+      const horizontalPosition =
+        side === "left"
+          ? Math.random() * (window.innerWidth * 0.15)
+          : window.innerWidth -
+            Math.random() * (window.innerWidth * 0.15);
+
       const color = colors[Math.floor(Math.random() * colors.length)];
 
       heart.style.position = "fixed";
-      heart.style.left = `${left}px`;
-      heart.style.bottom = "0px";
+      heart.style.left = `${horizontalPosition}px`;
+      heart.style.bottom = `${verticalOffset}px`;
       heart.style.fontSize = `${size}px`;
       heart.style.color = color;
       heart.style.pointerEvents = "none";
       heart.style.zIndex = "9999";
-      heart.style.animation = "floatUp 4.5s ease-out forwards";
+      heart.style.opacity = "0.95";
+      heart.style.animation = "floatUp 4s ease-out forwards";
       heart.style.transform = `translateX(${drift}px)`;
 
       document.body.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
-      }, 4500);
+      }, 4000);
     };
 
     const onScroll = () => {
-      createHeart();
-      createHeart();
-      if (Math.random() > 0.5) createHeart();
-      if (Math.random() > 0.75) createHeart();
+      createHeart("left");
+      if (Math.random() > 0.6) {
+        createHeart("right");
+      }
     };
 
     window.addEventListener("scroll", onScroll);
@@ -121,11 +132,11 @@ export default function HomePage() {
       <style jsx global>{`
         @keyframes floatUp {
           0% {
-            transform: translateY(0) scale(0.9);
+            transform: translateY(0) scale(0.85);
             opacity: 1;
           }
           100% {
-            transform: translateY(-160px) scale(1.25);
+            transform: translateY(-140px) scale(1.1);
             opacity: 0;
           }
         }
