@@ -28,7 +28,14 @@ function EventCard({
 }: EventCardProps) {
   return (
     <div className="w-full">
-      <h3 className="text-center font-semibold mb-4">Upcoming Event</h3>
+      <div className="flex items-center justify-center gap-3 mb-6">
+  <span className="h-[1px] w-10 bg-gray-300" />
+  <h3 className="text-sm uppercase tracking-wide font-semibold text-gray-700">
+    Upcoming Event
+  </h3>
+  <span className="h-[1px] w-10 bg-gray-300" />
+</div>
+
 
       <div className="rounded-2xl border bg-white shadow-md hover:shadow-xl transition overflow-hidden">
         <div className="p-4 flex justify-center">
@@ -71,9 +78,9 @@ function EventCard({
 export default function HomePage() {
   useEffect(() => {
     const colors = [
-      "rgba(220,38,38,0.85)",   // red
-      "rgba(236,72,153,0.85)",  // pink
-      "rgba(255,255,255,0.9)",  // white
+      "rgba(220,38,38,0.85)",
+      "rgba(236,72,153,0.85)",
+      "rgba(255,255,255,0.9)",
     ];
 
     const createHeart = (side: "left" | "right") => {
@@ -82,16 +89,12 @@ export default function HomePage() {
 
       const size = Math.random() * 8 + 16;
       const verticalOffset = Math.random() * 120;
-      const drift =
-        side === "left"
-          ? Math.random() * 40
-          : Math.random() * -40;
+      const drift = side === "left" ? Math.random() * 40 : Math.random() * -40;
 
       const horizontalPosition =
         side === "left"
           ? Math.random() * (window.innerWidth * 0.15)
-          : window.innerWidth -
-            Math.random() * (window.innerWidth * 0.15);
+          : window.innerWidth - Math.random() * (window.innerWidth * 0.15);
 
       const color = colors[Math.floor(Math.random() * colors.length)];
 
@@ -107,24 +110,16 @@ export default function HomePage() {
       heart.style.transform = `translateX(${drift}px)`;
 
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 4000);
+      setTimeout(() => heart.remove(), 4000);
     };
 
     const onScroll = () => {
       createHeart("left");
-      if (Math.random() > 0.6) {
-        createHeart("right");
-      }
+      if (Math.random() > 0.6) createHeart("right");
     };
 
     window.addEventListener("scroll", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -142,20 +137,7 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* HEADER */}
-      <header className="bg-white border-b sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
-          <Image
-            src="/images/bjsm-logo.png"
-            alt="BJSM Logo"
-            width={56}
-            height={56}
-          />
-          <h1 className="text-lg md:text-xl font-semibold">
-            Bihar Jharkhand Sabha of Australia and New Zealand
-          </h1>
-        </div>
-      </header>
+      
 
       {/* HERO */}
       <section className="relative w-full h-[55vh]">
@@ -211,35 +193,30 @@ export default function HomePage() {
               href="https://www.bjsm.org/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="BJSM Official Website"
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 hover:text-gray-900"
             >
               <Globe size={28} />
             </a>
-
             <a
               href="https://www.facebook.com/biharjharkhand"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="BJSM Facebook"
-              className="text-gray-600 hover:text-blue-600 transition"
+              className="text-gray-600 hover:text-blue-600"
             >
               <Facebook size={28} />
             </a>
-
             <a
               href="https://www.instagram.com/bjsmanz/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="BJSM Instagram"
-              className="text-gray-600 hover:text-pink-600 transition"
+              className="text-gray-600 hover:text-pink-600"
             >
               <Instagram size={28} />
             </a>
           </div>
 
           <p className="text-xs text-gray-500 mt-6">
-            © {new Date().getFullYear()} BJSM. Community-led, not-for-profit.
+            © {new Date().getFullYear()} BJSM. Community-led, not-for-profit. Powered by Webfitt.com
           </p>
         </div>
       </footer>
