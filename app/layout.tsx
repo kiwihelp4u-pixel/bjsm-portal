@@ -1,9 +1,8 @@
 // app/layout.tsx
 import "./globals.css";
-import type { Metadata } from "next";
 import Header from "./components/Header";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "BJSM Portal",
   description: "Bihar Jharkhand Sabha of Australia and New Zealand",
 };
