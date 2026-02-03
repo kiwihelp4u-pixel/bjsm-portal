@@ -1,6 +1,6 @@
 // app/layout.tsx
 import "./globals.css";
-import Header from "./component/Header";
+import Header from "./component/header";
 
 export const metadata = {
   title: "BJSM Portal",
